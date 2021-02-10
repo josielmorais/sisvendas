@@ -1,20 +1,7 @@
 package com.sisvendas.demo;
 
-import java.util.Arrays;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.sisvendas.demo.domain.Categoria;
-import com.sisvendas.demo.domain.Cidade;
-import com.sisvendas.demo.domain.Estado;
-import com.sisvendas.demo.domain.Produto;
-import com.sisvendas.demo.repositories.CategoriaRepository;
-import com.sisvendas.demo.repositories.CidadeRepository;
-import com.sisvendas.demo.repositories.EstadoRepository;
-import com.sisvendas.demo.repositories.ProdutoRepository;
 
 @SpringBootApplication
 public class SisvendasApplication {
@@ -33,8 +20,7 @@ public class SisvendasApplication {
 		SpringApplication.run(SisvendasApplication.class, args);
 	}
 
-//	@Override
-//	public void run(String... args) throws Exception {
+	public void run(String... args) throws Exception {
 //		// TODO Auto-generated method stub
 //		Categoria cat1 = new Categoria(null,"Informática");
 //		Categoria cat2 = new Categoria(null,"Escritório");
@@ -64,8 +50,8 @@ public class SisvendasApplication {
 //		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 //		estadoRepository.saveAll(Arrays.asList(est1,est2));
 //		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
-//		
-//
-//	}
+		
+
+	}
 
 }
