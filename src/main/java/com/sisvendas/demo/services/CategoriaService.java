@@ -1,6 +1,7 @@
 package com.sisvendas.demo.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,13 +19,14 @@ public class CategoriaService {
 	private CategoriaRepository repo;
 	
 	public Categoria find(Integer id) {
-		
-		Categoria obj = repo.getOne(id);
-		if (obj == null) {
+		Optional<Categoria> obj = repo.findById(id);
+
+		//Não entra no metodo( verificar depois)
+		if (obj == null || obj.equals(null)) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id
 			+ ", Tipo: " + Categoria.class.getName());
 			}
-		return obj;
+		return obj.orElse(null);
 	}
 	
 	

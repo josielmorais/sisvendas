@@ -2,7 +2,6 @@ package com.sisvendas.demo.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +24,15 @@ public class CategoriaResources {
 	@Autowired
 	private CategoriaService service;
 	
+	//ok
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
+	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	//ok
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		
@@ -40,6 +41,7 @@ public class CategoriaResources {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	//ok
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		

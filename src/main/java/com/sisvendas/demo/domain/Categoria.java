@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,18 +23,22 @@ public class Categoria implements Serializable {
 	private String nome;
 
 	
-	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos = new ArrayList<>();
+//	@ManyToMany(mappedBy = "categorias")
+//	private List<Produto> produtos = new ArrayList<>();
 
 	public Categoria() {
 
 	}
 
 	public Categoria(Integer id, String nome) {
-		super();
+	
 		this.id = id;
 		this.nome = nome;
+//		this.produtos = produtos;
 	}
+
+
+
 
 	public Integer getId() {
 		return id;
@@ -50,13 +56,16 @@ public class Categoria implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
+//	public List<Produto> getProdutos() {
+//		return produtos;
+//	}
+//
+//	public void setProdutos(List<Produto> produtos) {
+//		this.produtos = produtos;
+//	}
+	
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
+	
 
 	@Override
 	public int hashCode() {
