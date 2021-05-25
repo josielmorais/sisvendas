@@ -13,31 +13,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.sisvendas.demo.domain.Categoria;
-import com.sisvendas.demo.dto.CategoriaDTO;
-import com.sisvendas.demo.services.CategoriaService;
+import com.sisvendas.demo.domain.Estado;
+import com.sisvendas.demo.dto.EstadoDTO;
+import com.sisvendas.demo.services.EstadoService;
 
 @RestController
-@RequestMapping(value="/categorias")
-public class CategoriaResources {
+@RequestMapping(value="/estados")
+public class EstadoResources {
 	
 	@Autowired
-	private CategoriaService service;
+	private EstadoService service;
 	
 	//ok
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
-		Categoria obj = service.find(id);
+		Estado obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	//ok
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<CategoriaDTO>> findAll() {
+	public ResponseEntity<List<EstadoDTO>> findAll() {
 		
-		List<Categoria> list = service.findAll();
-		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		List<Estado> list = service.findAll();
+		List<EstadoDTO> listDTO = list.stream().map(obj -> new EstadoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
@@ -51,14 +51,14 @@ public class CategoriaResources {
 	
 	//ok
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
-	public ResponseEntity<Categoria> update(@RequestBody Categoria obj,@PathVariable Integer id) {
+	public ResponseEntity<Estado> update(@RequestBody Estado obj,@PathVariable Integer id) {
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
 	//ok
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert (@RequestBody Categoria obj){
+	public ResponseEntity<Void> insert (@RequestBody Estado obj){
 		obj  = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
