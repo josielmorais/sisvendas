@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sisvendas.demo.domain.enums.EstadoPagamento;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -32,10 +33,10 @@ public abstract class Pagamento implements Serializable {
 
 	}
 
-	public Pagamento(Integer id, Integer estado, Pedido pedido) {
+	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estado = estado;
+		this.estado = (estado == null) ? null : estado.getCod();
 		this.pedido = pedido;
 	}
 
