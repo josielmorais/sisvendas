@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sisvendas.demo.domain.Cliente;
 import com.sisvendas.demo.dto.ClienteDTO;
+import com.sisvendas.demo.dto.ClienteNewDTO;
 import com.sisvendas.demo.services.ClienteService;
 
 @RestController
@@ -35,7 +36,17 @@ public class ClienteResources {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	//ok
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+		Cliente obj = service.fromDTO(objDto);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
+	
+	
 		@RequestMapping(method=RequestMethod.GET)
 		public ResponseEntity<List<ClienteDTO>> findAll() {
 			
@@ -57,7 +68,7 @@ public class ClienteResources {
 			return ResponseEntity.ok().body(listDTO);
 		}
 		
-		//ok
+		
 		@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 		public ResponseEntity<Void> delete(@PathVariable Integer id) {
 			
@@ -65,7 +76,7 @@ public class ClienteResources {
 			return ResponseEntity.noContent().build();
 		}
 		
-		//ok
+		
 		@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 		public ResponseEntity<Cliente> update(@Valid @RequestBody ClienteDTO objDTO,@PathVariable Integer id) {
 			Cliente obj = service.fromDTO(objDTO);
@@ -73,14 +84,14 @@ public class ClienteResources {
 			obj = service.update(obj);
 			return ResponseEntity.noContent().build();
 		}
-		//ok
-		@RequestMapping(method=RequestMethod.POST)
-		public ResponseEntity<Void> insert (@Valid @RequestBody ClienteDTO objDTO){
-			Cliente obj = service.fromDTO(objDTO);
-			obj  = service.insert(obj);
-			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-					.path("/{id}").buildAndExpand(obj.getId()).toUri();
-			return ResponseEntity.created(uri).build();
-			
-		}
+		
+//		@RequestMapping(method=RequestMethod.POST)
+//		public ResponseEntity<Void> insert (@Valid @RequestBody ClienteDTO objDTO){
+//			Cliente obj = service.fromDTO(objDTO);
+//			obj  = service.insert(obj);
+//			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+//					.path("/{id}").buildAndExpand(obj.getId()).toUri();
+//			return ResponseEntity.created(uri).build();
+//			
+//		}
 }
