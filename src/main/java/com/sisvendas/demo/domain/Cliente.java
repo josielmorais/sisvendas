@@ -22,8 +22,10 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sisvendas.demo.domain.enums.TipoCliente;
+import com.sisvendas.demo.services.validation.ClienteUpdate;
 
 @Entity
+@ClienteUpdate
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
