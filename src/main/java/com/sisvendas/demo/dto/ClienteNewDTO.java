@@ -2,21 +2,48 @@ package com.sisvendas.demo.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.sisvendas.demo.services.validation.ClienteInsert;
+
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message = "Preenchimento obrigatótrio")
+	@Length(min = 5 ,max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
+	
+	@NotEmpty(message = "Preenchimento obrigatótrio")
+	@Email(message = "Email inválido")
 	private String email;
+	
+	@NotEmpty(message = "Preenchimento obrigatótrio")
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
-
+	
+	@NotEmpty(message = "Preenchimento obrigatótrio")
 	private String logradouro;
+	
+	@NotEmpty(message = "Preenchimento obrigatótrio")
 	private String numero;
+	
 	private String complemento;
+	
+	@NotEmpty(message = "Preenchimento obrigatótrio")
 	private String bairro;
+	
+	@NotEmpty(message = "Preenchimento obrigatótrio")
 	private String cep;
 
+	@NotEmpty(message = "Preenchimento obrigatótrio")
 	private String telefone1;
+	
 	private String telefone2;
 	private String telefone3;
 
