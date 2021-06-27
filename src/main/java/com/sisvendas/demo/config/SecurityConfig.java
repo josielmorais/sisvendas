@@ -19,9 +19,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-//import com.desafiotecnico.api.security.JWTAuthenticationFilter;
-//import com.desafiotecnico.api.security.JWTAuthorizationFilter;
-//import com.desafiotecnico.api.security.JWTUtil;
+import com.sisvendas.demo.security.JWTAuthenticationFilter;
+import com.sisvendas.demo.security.JWTAuthorizationFilter;
+import com.sisvendas.demo.security.JWTUtil;
 
 @Configuration
 @EnableWebSecurity
@@ -31,11 +31,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-//	@Autowired
-  //  private Environment env;
+  	@Autowired
+    private Environment env;
 	
-//	@Autowired
-//	private JWTUtil jwtUtil;
+ 	@Autowired
+	private JWTUtil jwtUtil;
 	
 	private static final String[] PUBLIC_MATCHERS = {
 			"/h2-console/**"
@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
 			"/categorias/**",
+			"/clientes/**",
 			"/estados/**"
 	};
 
@@ -55,9 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-//		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
- //           http.headers().frameOptions().disable();
- //       }
+		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+           http.headers().frameOptions().disable();
+       }
 		
     //    Autoriza pra que esta dentro (antMatchers(vetor)), os demais pedi autenticação
 		http.cors().and().csrf().disable();
@@ -66,8 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
 			.anyRequest().authenticated();
-	//	http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
-	//	http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
