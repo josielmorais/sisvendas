@@ -40,7 +40,7 @@ public class PedidoResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+//	Restrição de conteúdo: cliente só recupera seus pedidos
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<Pedido>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
