@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.sisvendas.demo.services.exceptions.AuthorizationException;
 import com.sisvendas.demo.services.exceptions.DataIntegrityException;
 import com.sisvendas.demo.services.exceptions.ObjectNotFoundException;
 
@@ -31,18 +32,21 @@ public class ResourceExptionHandler {
 		
 	}
 	
-	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<StandarError> validation (MethodArgumentNotValidException e, HttpServletRequest request){
 			
 		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de validação", System.currentTimeMillis());
-		
 		for(FieldError x : e.getBindingResult().getFieldErrors()) {
 			err.addErro(x.getField(), x.getDefaultMessage());
 		}
-		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandarError> authorization(AuthorizationException e, HttpServletRequest request) {
 		
+		StandarError err = new StandarError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 	}
 	
 }

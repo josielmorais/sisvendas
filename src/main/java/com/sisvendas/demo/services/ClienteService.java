@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sisvendas.demo.domain.Cidade;
 import com.sisvendas.demo.domain.Cliente;
 import com.sisvendas.demo.domain.Endereco;
+import com.sisvendas.demo.domain.enums.Perfil;
 import com.sisvendas.demo.domain.enums.TipoCliente;
 import com.sisvendas.demo.dto.ClienteDTO;
 import com.sisvendas.demo.dto.ClienteNewDTO;
 import com.sisvendas.demo.repositories.ClienteRepository;
 import com.sisvendas.demo.repositories.EnderecoRepository;
+import com.sisvendas.demo.security.UserSS;
+import com.sisvendas.demo.services.exceptions.AuthorizationException;
 import com.sisvendas.demo.services.exceptions.DataIntegrityException;
 import com.sisvendas.demo.services.exceptions.ObjectNotFoundException;
 
@@ -38,6 +41,14 @@ public class ClienteService {
 	
 	
 	public Cliente find(Integer id) {
+		
+//		se o cliente logado não for ADMIN e não for o cliente do id solicitado, lançar uma exceção
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
