@@ -43,6 +43,7 @@ public class ClienteService {
 	public Cliente find(Integer id) {
 		
 //		se o cliente logado não for ADMIN e não for o cliente do id solicitado, lançar uma exceção
+//		Restrição de conteúdo: cliente só recupera ele mesmo
 		UserSS user = UserService.authenticated();
 		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");
