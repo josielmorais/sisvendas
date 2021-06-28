@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ public class CategoriaResources {
 	@Autowired
 	private CategoriaService service;
 	
-	//ok
+	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
@@ -36,7 +37,6 @@ public class CategoriaResources {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	//ok
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		
@@ -58,7 +58,7 @@ public class CategoriaResources {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	//ok
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		
@@ -66,7 +66,7 @@ public class CategoriaResources {
 		return ResponseEntity.noContent().build();
 	}
 	
-	//ok
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 	public ResponseEntity<Categoria> update(@Valid @RequestBody CategoriaDTO objDTO,@PathVariable Integer id) {
 		Categoria obj = service.fromDTO(objDTO);
@@ -74,7 +74,8 @@ public class CategoriaResources {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-	//ok
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert (@Valid @RequestBody CategoriaDTO objDTO){
 		Categoria obj = service.fromDTO(objDTO);
